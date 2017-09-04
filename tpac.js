@@ -1,4 +1,4 @@
-const color = d3.scaleOrdinal(d3.schemeCategory10);
+const color = d3.scaleOrdinal(['#F99','#fc9','#ff9','#cf9','#9f9','#9fc', '#9ff']);
 
 const schedule = new Map([
     [{y: 2017, m: 10, d: 6, href:"https://www.w3.org/2017/11/TPAC/schedule.html#Monday"},
@@ -24,7 +24,7 @@ const schedule = new Map([
     [{y: 2017, m: 10, d: 8, href:"https://www.w3.org/2017/11/TPAC/schedule.html#Wednesday"},
      [
          {blocks: [{start: 800, end: 1800, name: "Plenary Day", href:"https://www.w3.org/2017/11/TPAC/schedule.html#Wednesday"}], color: color(0)},
-         {blocks: [{start: 1315, end: 1800, name: "Executive Forum", href:"http://www.webexecutiveforum.com/"},
+         {blocks: [{start: 1315, end: 1800, name: "Web Executive Forum", href:"http://www.webexecutiveforum.com/"},
                 {start: 1215, end: 1315, name: "Registration", title: "Executive Forum Registration"}], color: color(5)},
 {blocks: [{start: 925, end: 1000, name: "Coffee break"},
                 {start: 1500, end: 1530, name: "Coffee break", ta: 'start'},
