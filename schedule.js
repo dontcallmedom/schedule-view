@@ -35,7 +35,7 @@ function ScheduleMaker(container, schedule) {
     const defaultExtent = [700,2200];
     x.domain(defaultExtent);
 
-    const toAmPm = t => t < 1200 ? Math.floor(t/100) + 'AM' : (t == 1200 ? '12PM' : (Math.floor((t)/100) - 12) + 'PM' );
+    const toAmPm = t => t < 1200 ? Math.floor(t/100) + 'am' : (t == 1200 ? '12pm' : (Math.floor((t)/100) - 12) + 'pm' );
 
     const ticks = svgroot.selectAll('tick').data([800, 1000, 1200, 1400, 1600, 1800, 2000, 2200])
           .enter()
@@ -55,10 +55,11 @@ function ScheduleMaker(container, schedule) {
         const y = d3.scaleLinear().range([dayHeight, 0]);
 
         const svg = svgroot.append("g")
+              .attr("class", "day")
               .attr("role", "region")
               .attr("transform", "translate(0," + heightOffset + ")");
         svg.append("rect")
-            .attr('fill', i % 2 ? 'white' : '#eee')
+            .attr('class', 'day-panel')
             .attr('data-x-scale', 'width')
             .attr('data-width', width)
             .attr('height', dayHeight);
@@ -67,7 +68,6 @@ function ScheduleMaker(container, schedule) {
         svg.selectAll(".hour").data(hours).enter()
             .append('line')
             .attr('class', 'hour')
-            .attr('stroke','#aaa')
             .attr('data-x-scale', 'x1 x2')
             .attr('data-x1', x)
             .attr('data-x2', x)
@@ -80,22 +80,9 @@ function ScheduleMaker(container, schedule) {
             .attr('data-x2', width)
             .attr('y1', dayHeight)
             .attr('y2', dayHeight)
-            .attr('stroke', '#000');1
+            .attr('stroke-width', 3)
+            .attr('stroke', '#000');
 
-        // filter for background color on text
-        const filter = d3.select("svg")
-              .append("defs")
-              .append("filter")
-              .attr("x", 0)
-              .attr("y", 0)
-              .attr("width", 1)
-              .attr("height", 1)
-              .attr("id", "solid");
-        filter.append("feFlood")
-            .attr("flood-color", "white")
-            .attr("flood-opacity", "0.8");
-        filter.append("feComposite")
-            .attr("in", "SourceGraphic");
         const dayOfWeek = days[new Date(day.y, day.m, day.d).getDay()];
 
         svg.append('a')
@@ -104,15 +91,11 @@ function ScheduleMaker(container, schedule) {
             .attr("role", "heading")
 
             .attr('class', 'day')
-            .attr('letter-spacing', "-0.05em")
-            .attr('fill', '#777')
             .attr('data-x-scale', 'x')
             .attr('data-x', width)
             .attr('y', 25)
+            .attr('dominant-baseline', 'central')
             .attr('text-anchor', 'end')
-            .attr("dominant-baseline", "central")
-            .attr('font-weight', 'bold')
-            .attr('font-size', 60)
             .text(dayOfWeek.slice(0,2))
             .append("title")
             .text("Schedule for " + dayOfWeek);
@@ -149,14 +132,13 @@ function ScheduleMaker(container, schedule) {
             .attr('xlink:href', d => d.href)
             .attr("aria-labelledby", (d,i) => "title-" + (d.line) + "-" + i)
             .append('text')
+            .attr('class', 'block')
             .attr('text-anchor', d => d.ta ? d.ta : 'end')
             .attr('data-x-scale', 'x')
             .attr("dominant-baseline", "central")
             .attr('data-x-add', d => d.ta == 'start' ? 2 : - 4)
             .attr('data-x', d => d.ta == 'start' ? x(mapTime00(d.start)) : x(mapTime00(d.end)))
             .attr('y', d => d.line*(blockHeight+4) + blockHeight/2 )
-            .attr('font-size', 12)
-            .attr("filter", "url(#solid")
             .text(d => d.name)
             .append("title")
             .attr("id", (d,i) => "title-" + (d.line) + "-" + i)
