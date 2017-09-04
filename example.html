@@ -2,8 +2,24 @@
   <meta charset=utf-8>
   <title>TPAC Schedule at a Glance</title>
   <meta name="viewport" content="initial-scale=1">
+  <style>
+    g.day:nth-child(even) .day-panel {
+    fill: white;
+    }
+    g.day:nth-child(odd) .day-panel {
+    fill: #eee;
+    }
+    .hour {
+    stroke: #aaa;
+    }
+    text.day { font-weight: bold; letter-spacing: -0.05em; fill: #666; font-size: 60px;}
+    text.block {font-size: 12px; font-weight: bold; filter : url("#solid")}
+
+  </style>
   <body>
     <div id="schedule">
+      <svg width=0 height=0>
+        <defs><filter x="0" y="0" width="1" height="1" id="solid"><feFlood flood-color="white" flood-opacity="0.8"></feFlood><feComposite in="SourceGraphic"></feComposite></filter></defs></svg>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.0/d3.min.js"></script>
     <script src="schedule.js"></script>
