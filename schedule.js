@@ -96,7 +96,7 @@ function ScheduleMaker(container, schedule) {
             .attr('y', 25)
             .attr('dominant-baseline', 'central')
             .attr('text-anchor', 'end')
-            .text(dayOfWeek.slice(0,2))
+            .text(dayOfWeek.slice(0,3))
             .append("title")
             .text("Schedule for " + dayOfWeek);
 
